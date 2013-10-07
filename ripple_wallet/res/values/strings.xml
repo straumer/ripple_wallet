@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RippleWallet</string>
+    <string name="app_name">Ripple Wallet</string>
+    <string name="address_hint">Address</string>
+    <string name="password_hint">Password</string>
 </resources>
