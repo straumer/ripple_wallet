@@ -1,20 +1,5 @@
 package com.codebutler.android_websockets;
 
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Log;
-import org.apache.http.*;
-import org.apache.http.client.HttpResponseException;
-import org.apache.http.message.BasicLineParser;
-import org.apache.http.message.BasicNameValuePair;
-
-import javax.net.SocketFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -24,6 +9,27 @@ import java.net.URI;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+
+import org.apache.http.Header;
+import org.apache.http.HttpException;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.message.BasicLineParser;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 
 public class WebSocketClient {
     private static final String TAG = "WebSocketClient";
@@ -128,6 +134,7 @@ public class WebSocketClient {
 
                 } catch (EOFException ex) {
                     Log.d(TAG, "WebSocket EOF!", ex);
+                    ex.printStackTrace();
                     mListener.onDisconnect(0, "EOF");
                     mConnected = false;
 
@@ -140,6 +147,8 @@ public class WebSocketClient {
                 } catch (Exception ex) {
                     mListener.onError(ex);
                 }
+                
+               
             }
         });
         mThread.start();
@@ -150,16 +159,14 @@ public class WebSocketClient {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (mSocket != null) {
-                        try {
-                            mSocket.close();
-                        } catch (IOException ex) {
-                            Log.d(TAG, "Error while disconnecting", ex);
-                            mListener.onError(ex);
-                        }
+                    try {
+                        mSocket.close();
                         mSocket = null;
+                        mConnected = false;
+                    } catch (IOException ex) {
+                        Log.d(TAG, "Error while disconnecting", ex);
+                        mListener.onError(ex);
                     }
-                    mConnected = false;
                 }
             });
         }

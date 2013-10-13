@@ -107,9 +107,11 @@ public class HybiParser {
     public void start(HappyDataInputStream stream) throws IOException {
         while (true) {
             if (stream.available() == -1) break;
+            Log.v(TAG,"stream: "+stream.toString());
             switch (mStage) {
                 case 0:
-                    parseOpcode(stream.readByte());
+                	byte streamByte = stream.readByte();
+                    parseOpcode(streamByte);
                     break;
                 case 1:
                     parseLength(stream.readByte());

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import com.codebutler.android_websockets.WebSocketClient;
 
 /** Starting activity with a log in screen. 
  *  
