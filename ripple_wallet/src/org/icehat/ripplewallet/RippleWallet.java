@@ -1,9 +1,17 @@
 package org.icehat.ripplewallet;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.io.IOException;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import de.tavendo.autobahn.WebSocketConnection;
+import de.tavendo.autobahn.WebSocketException;
+import de.tavendo.autobahn.WebSocketHandler;
 
 /** Starting activity with a log in screen. 
  *  
@@ -11,7 +19,7 @@ import android.view.View;
  */
 public class RippleWallet extends Activity
 {
-    private LogIn li = new LogIn();
+    private static final String TAG = "RippleWallet";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -29,6 +37,9 @@ public class RippleWallet extends Activity
      *  Note: Method in the making, doing tests.
      */
     public void logIn(View view) {
-        this.li.printToLog();
+        /*
+            "wss://s1.ripple.com";
+        */
+        Log.i(TAG, "Button clicked");
     }
 }
