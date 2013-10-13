@@ -9,10 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import de.tavendo.autobahn.WebSocketConnection;
-import de.tavendo.autobahn.WebSocketException;
-import de.tavendo.autobahn.WebSocketHandler;
-
 /** Starting activity with a log in screen. 
  *  
  *  @author Matthías Ragnarsson
@@ -37,9 +33,9 @@ public class RippleWallet extends Activity
      *  Note: Method in the making, doing tests.
      */
     public void logIn(View view) {
-        /*
-            "wss://s1.ripple.com";
-        */
+        
         Log.i(TAG, "Button clicked");
+        
+        final String rippleServerURI = "wss://s1.ripple.com";
     }
 }
