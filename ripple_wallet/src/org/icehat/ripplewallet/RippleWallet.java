@@ -4,7 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.io.IOException;
 import java.util.List;
-import java.lang.Integer;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import com.codebutler.android_websockets.WebSocketClient;
-import com.codebutler.android_websockets.HybiParser;
 
 /** Starting activity with a log in screen. 
  *  
@@ -70,5 +68,6 @@ public class RippleWallet extends Activity
                 Log.e(TAG, "Error!", error);
             }
         }, extraHeaders);
+        client.connect();
     }
 }
