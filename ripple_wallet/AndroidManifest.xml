@@ -11,6 +11,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="Balance"
+                  android:label="@string/app_name"
+                  android:parentActivityName="org.icehat.ripplewallet.RippleWallet" >
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

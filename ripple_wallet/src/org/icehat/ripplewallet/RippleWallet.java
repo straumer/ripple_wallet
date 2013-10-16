@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.content.Intent;
 
 
 import com.codebutler.android_websockets.WebSocketClient;
@@ -118,6 +119,9 @@ public class RippleWallet extends Activity
      *  @param balance Balance of the account.
      */
     public void toBalance(String balance) {
+        Intent intent = new Intent(this, Balance.class);
+        intent.putExtra(TAG, balance);
+        startActivity(intent);
     }
 
     /** Sends a request for account information to server.
