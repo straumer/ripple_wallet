@@ -21,5 +21,8 @@ public class Balance extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.balance);
+        String balance = getIntent().getStringExtra(RippleWallet.TAG);
+        TextView balanceView = (TextView) findViewById(R.id.balance_view);
+        balanceView.setText(balance + " XRP");
     }
 }

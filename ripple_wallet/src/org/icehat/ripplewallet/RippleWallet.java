@@ -27,7 +27,7 @@ import org.json.JSONObject;
  */
 public class RippleWallet extends Activity
 {
-    private static final String TAG = "RippleWallet";
+    public static final String TAG = "RippleWallet";
     private static final String rippleServerURI = "wss://s1.ripple.com";
     private WebSocketClient client;
     List<BasicNameValuePair> extraHeaders;
