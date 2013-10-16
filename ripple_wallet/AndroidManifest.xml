@@ -4,14 +4,14 @@
       android:versionCode="1"
       android:versionName="1.0">
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <activity android:name="RippleWallet"
+        <activity android:name="org.icehat.ripplewallet.RippleWallet"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="Balance"
+        <activity android:name="org.icehat.ripplewallet.Balance"
                   android:label="@string/app_name"
                   android:parentActivityName="org.icehat.ripplewallet.RippleWallet" >
         </activity>
