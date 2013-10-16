@@ -120,7 +120,7 @@ public class RippleWallet extends Activity
         // get user and pass
         EditText address = (EditText)findViewById(R.id.address);
         EditText password = (EditText)findViewById(R.id.password);
-        TextView login_msg = (TextView)findViewById(R.id.login_message);
+        TextView login_msg = (TextView)findViewById(R.id.login_msg);
 
         Log.i(TAG, address.getText().toString());
         Log.i(TAG, password.getText().toString());
