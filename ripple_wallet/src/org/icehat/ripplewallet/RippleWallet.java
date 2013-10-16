@@ -47,8 +47,19 @@ public class RippleWallet extends Activity
 
             @Override
             public void onMessage(String message) {
-                Log.d(TAG, String.format("Got string message! %s", message));
+                Log.d(TAG, String.format("JSON received... %s", message));
 
+                try {
+                    String balance = parseBalance(message);
+                    Log.d(TAG, String.format("Balance is: %s", balance));
+                    toBalance(balance);
+                } catch (JSONException e) {
+                    Log.e(TAG, "Parsing error.");
+                }
+
+
+
+                /*
                 JSONObject object = null;
                 try {
                     object = new JSONObject(message);
@@ -70,6 +81,7 @@ public class RippleWallet extends Activity
                 final int transaction_id = temp_id;
                 final JSONObject result = temp_result;
                 Log.d(TAG, "Got result: " + result);
+                */
 
             }
 
@@ -91,6 +103,34 @@ public class RippleWallet extends Activity
         client.connect();
     }
 
+
+    /** Extracts and returns the string inside a JSON response to account_info call.
+     *
+     *  @param message JSON response to account_info. 
+     */
+    public String parseBalance(String message) throws JSONException{
+        JSONObject json = new JSONObject(message);
+        return json.getJSONObject("result").getJSONObject("account_data").get("Balance").toString();
+    }
+
+    /** Shift to Balance Activity with balance in Intent.
+     *
+     *  @param balance Balance of the account.
+     */
+    public void toBalance(String balance) {
+    }
+
+    /** Sends a request for account information to server.
+     *  
+     *  @param address Address of account.
+     */
+    public void getAccountInfo(String address) throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("command", "account_info");
+        json.put("account", address);
+        client.send(json.toString());
+    }
+
     /** Logs a user into a wallet with an address and password
      *  specified in the activity's address and password fields.\ When
      *  that occurs, appropriate information is stored and the activity
@@ -100,40 +140,30 @@ public class RippleWallet extends Activity
      *  Note: Method in the making, doing tests.
      * @throws JSONException
      */
-
-    public JSONObject parseResult(String message) throws JSONException{
-        JSONObject json = null;
-        json = new JSONObject(message);
-        final JSONObject result = json;
-        return result.getJSONObject("result");
-    }
-
-    public void account_info(String address) throws JSONException{
-        JSONObject json = new JSONObject();
-        json.put("account", address);
-        client.send(json.toString());
-    }
-
     public void logIn(View view) {
-        Log.i(TAG, "Button clicked");
 
-        // get user and pass
+        // Get text fields.
         EditText address = (EditText)findViewById(R.id.address);
         EditText password = (EditText)findViewById(R.id.password);
         TextView login_msg = (TextView)findViewById(R.id.login_msg);
+        
+        String dummy_address = "rLyDQiKG4j5rQUSuJvvNu5rTjtMZW96FhB";
 
-        Log.i(TAG, address.getText().toString());
-        Log.i(TAG, password.getText().toString());
         try {
+            // Build json.
+            /*
             JSONObject json = new JSONObject();
             json.put("command", "subscribe");
             json.put("id", 0);
             JSONArray arr = new JSONArray();
             arr.put("ledger");
             json.put("streams", arr);
-            client.send(json.toString());
-            login_msg.setText("Success!: ");
-            account_info(address.getText().toString());
+            */
+            //client.send(json.toString());
+
+            //getAccountInfo(address.getText().toString());
+            Log.d(TAG, "Attempting to log in to address: " + dummy_address);
+            getAccountInfo(dummy_address); // Daniel's account.
 
         } catch(JSONException e) {
             Log.e(TAG, e.toString());
