@@ -1,21 +1,22 @@
 package org.icehat.ripplewallet;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.io.IOException;
-import java.util.List;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
+/** Shows the account and the XRP balance RippleWallet passed it in
+ *  Intent.
+ *
+ *  @author Matthías Ragnarsson
+ *  @author Pétur Karl Ingólfsson
+ *  @author Daniel Eduardo Pinedo Quintero
+ *  @version Thu Oct 17 16:54:38 GMT 2013
+ */
 public class Balance extends Activity
 {
 
+    /** Fills the relevant fields with information from RippleWallet
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
