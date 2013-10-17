@@ -1,39 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
-    >
-    <TextView
-        android:layout_width="wrap_content"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="249dp"
+        android:layout_height="0dp"
+        android:layout_weight="1.04"
+        android:contentDescription="@string/login"
+        android:src="@drawable/logo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log in to Wallet"
-    />
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/address_hint"
-    />
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/password_hint"
-    />
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="302dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="@string/address_hint" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="238dp"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            android:onClick="populateAddress"
+            android:text="@string/demo" />
+
+        <Button
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            android:onClick="logIn"
+            android:text="@string/login" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/login_msg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-    />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:onClick="logIn"
-    />
 </LinearLayout>
-

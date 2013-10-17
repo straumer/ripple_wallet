@@ -32,6 +32,7 @@ public class RippleWallet extends Activity
     private WebSocketClient client;
     List<BasicNameValuePair> extraHeaders;
     private Activity activity;
+    public EditText address;
     private static final int ID_ACCOUNT_INFO = 100;
 
     @Override
@@ -49,13 +50,14 @@ public class RippleWallet extends Activity
             @Override
             public void onMessage(String message) {
                 Log.d(TAG, String.format("JSON received... %s", message));
-
+                TextView login_msg = (TextView)findViewById(R.id.login_msg);
                 try {
                     String balance = parseBalance(message);
                     Log.d(TAG, String.format("Balance is: %s", balance));
                     toBalance(balance);
                 } catch (JSONException e) {
                     Log.e(TAG, "Parsing error.");
+                    login_msg.setText("Address not found!");
                 }
 
 
@@ -120,7 +122,8 @@ public class RippleWallet extends Activity
      */
     public void toBalance(String balance) {
         Intent intent = new Intent(this, Balance.class);
-        intent.putExtra(TAG, balance);
+        intent.putExtra("address", address.getText().toString());
+        intent.putExtra(TAG, balance);       
         startActivity(intent);
     }
 
@@ -134,7 +137,15 @@ public class RippleWallet extends Activity
         json.put("account", address);
         client.send(json.toString());
     }
-
+    
+    /* Populates address field with dummy address for easier demoing
+     */
+    public void populateAddress(View view){
+    	address = (EditText)findViewById(R.id.address);
+    	String dummy_address = "rLyDQiKG4j5rQUSuJvvNu5rTjtMZW96FhB";
+    	address.setText(dummy_address);
+    	Log.d(TAG, "PopAddress: "+ address.getText().toString());
+    }
     /** Logs a user into a wallet with an address and password
      *  specified in the activity's address and password fields.\ When
      *  that occurs, appropriate information is stored and the activity
@@ -147,8 +158,8 @@ public class RippleWallet extends Activity
     public void logIn(View view) {
 
         // Get text fields.
-        EditText address = (EditText)findViewById(R.id.address);
-        EditText password = (EditText)findViewById(R.id.password);
+        address = (EditText)findViewById(R.id.address);
+        //EditText password = (EditText)findViewById(R.id.password);
         TextView login_msg = (TextView)findViewById(R.id.login_msg);
         
         String dummy_address = "rLyDQiKG4j5rQUSuJvvNu5rTjtMZW96FhB";
@@ -165,9 +176,9 @@ public class RippleWallet extends Activity
             */
             //client.send(json.toString());
 
-            //getAccountInfo(address.getText().toString());
-            Log.d(TAG, "Attempting to log in to address: " + dummy_address);
-            getAccountInfo(dummy_address); // Daniel's account.
+            getAccountInfo(address.getText().toString());
+            Log.d(TAG, "Attempting to log in to address: " + address.toString());
+            // getAccountInfo(address.toString()); // Daniel's account.
 
         } catch(JSONException e) {
             Log.e(TAG, e.toString());
