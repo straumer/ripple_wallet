@@ -95,7 +95,9 @@ public class RippleWallet extends Activity
      */
     public String parseBalance(String message) throws JSONException{
         JSONObject json = new JSONObject(message);
-        return json.getJSONObject("result").getJSONObject("account_data").get("Balance").toString();
+        return json.getJSONObject("result")
+                   .getJSONObject("account_data")
+                   .get("Balance").toString();
     }
 
     /** Shifts to Balance Activity with balance in Intent.
