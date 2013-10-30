@@ -1,0 +1,3 @@
+[submodule "ripple_wallet/mod/ripple-lib-java"]
+	path = ripple_wallet/mod/ripple-lib-java
+	url = https://github.com/ripple/ripple-lib-java.git
