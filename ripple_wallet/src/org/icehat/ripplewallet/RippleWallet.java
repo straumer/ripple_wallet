@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.apache.http.message.BasicNameValuePair;
+//import com.ripple.client.Account;
 
 /** Starting activity with a log in screen.\ It contains a Websocket
  *  client that detects incoming JSON messages from the server and decides
