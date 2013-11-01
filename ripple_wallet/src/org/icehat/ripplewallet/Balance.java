@@ -9,10 +9,9 @@ import android.widget.TextView;
  *
  *  @author Matthías Ragnarsson
  *  @author Pétur Karl Ingólfsson
- *  @author Daniel Eduardo Pinedo Quintero
  *  @version Thu Oct 17 16:54:38 GMT 2013
  */
-public class Balance extends Activity
+public class Balance extends Account
 {
 
     /** Fills the relevant fields with information from RippleWallet
