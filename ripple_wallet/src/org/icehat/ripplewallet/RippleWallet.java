@@ -27,6 +27,8 @@ import org.apache.http.message.BasicNameValuePair;
  *
  *  @author Matthías Ragnarsson
  *  @author Pétur Karl Ingólfsson
+ *  @author Daniel Eduardo Pinedo Quintero
+ *  @author Sigyn Jónsdóttir
  *  @version Thu Oct 17 16:33:37 GMT 2013
  */
 public class RippleWallet extends Activity

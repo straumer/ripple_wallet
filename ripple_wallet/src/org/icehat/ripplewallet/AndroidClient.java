@@ -12,6 +12,9 @@ import org.json.JSONObject;
  *  server.
  *
  *  @author Matthías Ragnarsson
+ *  @author Pétur Karl Ingólfsson
+ *  @author Daniel Eduardo Pinedo Quintero
+ *  @author Sigyn Jónsdóttir
  */
 public class AndroidClient extends Client {
 

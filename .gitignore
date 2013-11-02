@@ -1,4 +1,3 @@
 # No binaries.
 *.swp
-*.vim
 ripple_wallet/bin/*

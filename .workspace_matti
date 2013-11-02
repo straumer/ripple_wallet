@@ -1,0 +1,12 @@
+#!/bin/bash                                                             
+
+tmux has-session -t rw_workspace &> /dev/null
+
+if [ $? != 0 ] 
+ then
+    tmux new-session -d -s rw_workspace -n coding "vim -S .session_matti.vim && cd ripple_wallet"
+    tmux split-window -d -v -l 15 -t rw_workspace:coding "adb logcat | grep RippleWallet"
+    tmux new-window -d -n console -t rw_workspace -c ripple_wallet
+fi
+
+tmux attach -t rw_workspace
