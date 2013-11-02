@@ -49,6 +49,7 @@ public class RippleWallet extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        /*
         client = new WebSocketClient(URI.create(rippleServerURI), new WebSocketClient.Listener() {
 
             @Override
@@ -86,6 +87,7 @@ public class RippleWallet extends Activity
             }
         }, extraHeaders);
         client.connect();
+        */
     }
 
 

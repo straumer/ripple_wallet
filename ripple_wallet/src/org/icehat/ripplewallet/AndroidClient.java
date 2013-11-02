@@ -2,10 +2,12 @@ package org.icehat.ripplewallet;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import com.ripple.android.Logger;
+import android.util.Log;
+
 import com.ripple.client.Client;
 import com.ripple.client.ClientLogger;
 import com.ripple.client.transport.impl.JavaWebSocketTransportImpl;
+
 import org.json.JSONObject;
 
 /** A websocket client to connect to server and handle messages from/to
@@ -39,6 +41,16 @@ public class AndroidClient extends Client {
             }
         };
         handlerThread.start();
+    }
+
+    @Override
+    public void onConnected() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("RippleWallet", "Connected to server!");
+            }
+        });
     }
 
     @Override

@@ -5,4 +5,7 @@
     <string name="password_hint">Password</string>
     <string name="login">Login</string>
     <string name="demo">demo</string>
+    <string name="log_tag">RippleWallet</string>
+    <string name="ripple_server">wss://s1.ripple.com</string>
+    <string name="payward_blobvault">https://blobvault.payward.com/</string>
 </resources>

@@ -1,6 +1,8 @@
 package org.icehat.ripplewallet;
 
 import android.app.Application;
+import android.util.Log;
+
 import com.ripple.client.blobvault.BlobVault;
 
 /** Keeps track of global variables and makes them accessable everywhere.
@@ -18,6 +20,10 @@ public class SharedResources extends Application {
     /** Called before all other processes as application starts.
      */
     @Override
-    onCreate() {
+    public void onCreate() {
+        Log.d(getString(R.string.log_tag), "Application starting up...");
+        paywardBlobVault = new BlobVault(getString(R.string.payward_blobvault));
+        client = new AndroidClient();
+        client.connect(getString(R.string.ripple_server));
     }
 }
