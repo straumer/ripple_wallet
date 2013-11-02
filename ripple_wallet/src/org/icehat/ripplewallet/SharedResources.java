@@ -21,7 +21,7 @@ public class SharedResources extends Application {
      */
     @Override
     public void onCreate() {
-        Log.d(getString(R.string.log_tag), "Application starting up...");
+        Log.d("RippleWallet", "Application starting up...");
         paywardBlobVault = new BlobVault(getString(R.string.payward_blobvault));
         client = new AndroidClient();
         client.connect(getString(R.string.ripple_server));
