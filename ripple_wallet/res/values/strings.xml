@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ripple Wallet</string>
-    <string name="address_hint">Type your Ripple Address</string>
-    <string name="password_hint">Password</string>
+    <string name="wallet_name_hint">Wallet name</string>
+    <string name="passphrase_hint">Passphrase</string>
     <string name="login">Login</string>
     <string name="demo">demo</string>
     <string name="log_tag">RippleWallet</string>

@@ -19,14 +19,23 @@
         android:orientation="vertical" >
 
         <EditText
-            android:id="@+id/address"
+            android:id="@+id/wallet_name"
             android:layout_width="302dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
-            android:hint="@string/address_hint" >
+            android:hint="@string/wallet_name_hint" >
 
             <requestFocus />
+        </EditText>
+        <EditText
+            android:id="@+id/passphrase"
+            android:layout_width="302dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="@string/passphrase_hint" 
+            android:inputType="textPassword">
         </EditText>
     </LinearLayout>
 
@@ -49,7 +58,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/login_msg"
+        android:id="@+id/login_message"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"

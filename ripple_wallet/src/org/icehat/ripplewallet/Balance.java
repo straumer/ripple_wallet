@@ -23,7 +23,7 @@ public class Balance extends Account
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.balance);
-        String balance = getIntent().getStringExtra(RippleWallet.TAG);
+        String balance = getIntent().getStringExtra(getString(R.string.log_tag));
         String address = getIntent().getStringExtra("address");
         TextView balanceView = (TextView) findViewById(R.id.balance_view);
         TextView accountView = (TextView) findViewById(R.id.account);
