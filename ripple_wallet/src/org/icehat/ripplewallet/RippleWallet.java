@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
+import android.content.Context;
+import android.os.AsyncTask;
 
 import com.codebutler.android_websockets.WebSocketClient;
 
@@ -34,9 +36,12 @@ import org.apache.http.message.BasicNameValuePair;
 public class RippleWallet extends Activity
 {
     private WebSocketClient client;
+    public SharedResources resources;
     public static EditText walletName;
     public static EditText passphrase;
     public static TextView loginMessage; 
+    public static GetBlobTask getBlobTask;
+    public static String TAG;
 
     /** Shows the log in screen, initializes the websocket client and
      *  establishes a websocket connection with the Ripple server.
@@ -46,6 +51,8 @@ public class RippleWallet extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        TAG = getString(R.string.log_tag);
+        resources = (SharedResources) getApplicationContext();
         walletName = (EditText) findViewById(R.id.wallet_name);
         passphrase = (EditText) findViewById(R.id.passphrase);
         loginMessage = (TextView) findViewById(R.id.login_message);
@@ -55,36 +62,36 @@ public class RippleWallet extends Activity
 
             @Override
             public void onConnect() {
-                Log.d(getString(R.string.log_tag), "Connected!");
+                Log.d(TAG, "Connected!");
             }
 
             @Override
             public void onMessage(String message) {
-                Log.d(getString(R.string.log_tag), String.format("JSON received... %s", message));
+                Log.d(TAG, String.format("JSON received... %s", message));
                 TextView login_msg = (TextView)findViewById(R.id.login_msg);
                 try {
                     String balance = parseBalance(message);
-                    Log.d(getString(R.string.log_tag), String.format("Balance is: %s", balance));
+                    Log.d(TAG, String.format("Balance is: %s", balance));
                     toBalance(balance);
                 } catch (JSONException e) {
-                    Log.e(getString(R.string.log_tag), "Parsing error.");
+                    Log.e(TAG, "Parsing error.");
                     login_msg.setText("Address not found!");
                 }
             }
 
             @Override
             public void onMessage(byte[] data) {
-                Log.d(getString(R.string.log_tag), "Got binary message!");
+                Log.d(TAG, "Got binary message!");
             }
 
             @Override
             public void onDisconnect(int code, String reason) {
-                Log.d(getString(R.string.log_tag), String.format("Disconnected! Code: %d Reason: %s", code, reason));
+                Log.d(TAG, String.format("Disconnected! Code: %d Reason: %s", code, reason));
             }
 
             @Override
             public void onError(Exception error) {
-                Log.e(getString(R.string.log_tag), "Error!", error);
+                Log.e(TAG, "Error!", error);
             }
         }, extraHeaders);
         client.connect();
@@ -111,7 +118,7 @@ public class RippleWallet extends Activity
     public void toBalance(String balance) {
         Intent intent = new Intent(this, Balance.class);
         intent.putExtra("address", walletName.getText().toString());
-        intent.putExtra(getString(R.string.log_tag), balance);       
+        intent.putExtra(TAG, balance);       
         startActivity(intent);
     }
 
@@ -131,49 +138,29 @@ public class RippleWallet extends Activity
     public void populateAddress(View view) {
     	String dummy_address = "rLyDQiKG4j5rQUSuJvvNu5rTjtMZW96FhB";
     	walletName.setText(dummy_address);
-    	Log.d(getString(R.string.log_tag), "PopAddress: "+ walletName.getText().toString());
+    	Log.d(TAG, "PopAddress: "+ walletName.getText().toString());
     }
     
+    /** A task to get the blob asynchronously from the blobvault.
+     */
     private class GetBlobTask extends AsyncTask<String, String, JSONObject> {
         
         @Override
         protected void onPostExecute(final JSONObject blob) {
-            blobDownloadTask = null;
+            getBlobTask = null;
             if (blob == null) {
-                threadSafeSetStatus("Failed to retrieve blob!");
-                showOnlyLogin();
+                Log.d(TAG, "Failed blob retrieval. Returned null.");
                 return;
             }
-            threadSafeSetStatus("Retrieved blob!");
-
-            try {
-                masterSeed = blob.getString("master_seed");
-                populateContactsSpinner(blob.optJSONArray("contacts"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            client.runPrioritized(getAccount);
-            setSubmitToPay();
+            Log.d(TAG, "Successful blob retrieval:\n" + blob.toString());
         }
 
-        /**
-         * Thread: ui thread
-         */
-        @Override
-        protected void onPreExecute() {
-            hideAllButStatus();
-        }
-
-        /**
-         * Thread: own
-         */
         @Override
         protected JSONObject doInBackground(String... credentials) {
             try {
-                String username = credentials[0];
-                String password = credentials[1];
-                return blobVault.getBlob(username, password);
+                return resources.paywardBlobVault.getBlob(credentials[0], credentials[1]);
             } catch (Exception e) {
+                Log.d(TAG, "Invalid wallet name or passphrase.");
                 return null;
             }
         }
@@ -190,12 +177,19 @@ public class RippleWallet extends Activity
      *  @throws JSONException
      */
     public void logIn(View view) {
+
+        getBlobTask = new GetBlobTask();
+        getBlobTask.execute(walletName.getText().toString(), passphrase.getText().toString());
+        Log.d(TAG, "Getting blob...");
+         
+        /*
         try {
             getAccountInfo(walletName.getText().toString());
-            Log.d(getString(R.string.log_tag), "Attempting to log in to walletName: " + walletName.toString());
+            Log.d(TAG, "Attempting to log in to walletName: " + walletName.toString());
         } catch(JSONException e) {
-            Log.e(getString(R.string.log_tag), e.toString());
+            Log.e(TAG, e.toString());
             loginMessage.setText("Error: " + e.toString());
         }
+        */
     }
 }
