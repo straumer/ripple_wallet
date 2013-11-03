@@ -12,10 +12,8 @@ import android.os.AsyncTask;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-/** Starting activity with a log in screen.\ It contains a Websocket
- *  client that detects incoming JSON messages from the server and decides
- *  what to do with them.\ It also contains methods to extract relevant
- *  information from them and pass it on into other activities.
+/** Starting activity with a login screen. On login, it retrieves a relevant
+ *  blob from the blobvault and shifts to the balance activity.
  *
  *  @author Matthías Ragnarsson
  *  @author Pétur Karl Ingólfsson
@@ -31,10 +29,8 @@ public class RippleWallet extends Activity
     public static TextView loginMessage; 
     public static GetBlobTask getBlobTask;
     public static String TAG;
+    public static boolean isGettingBlob = false;
 
-    /** Shows the log in screen, initializes the websocket client and
-     *  establishes a websocket connection with the Ripple server.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -60,11 +56,14 @@ public class RippleWallet extends Activity
      */
     public void logIn(View v) {
         
-        getBlobTask = new GetBlobTask();
-        String walletName = this.walletName.getText().toString();
-        String passphrase = this.passphrase.getText().toString();
-        getBlobTask.execute(walletName, passphrase);
-        Log.d(TAG, "Getting blob with " + "walletName: " + walletName + ", passphrase: " + passphrase);
+        if (!isGettingBlob) {
+            isGettingBlob = true;
+            getBlobTask = new GetBlobTask();
+            String walletName = this.walletName.getText().toString();
+            String passphrase = this.passphrase.getText().toString();
+            getBlobTask.execute(walletName, passphrase);
+            Log.d(TAG, "Getting blob with " + "walletName: " + walletName + ", passphrase: " + passphrase);
+        }
     }
     
     /** Shifts to Balance Activity with blob in Intent.
@@ -87,10 +86,12 @@ public class RippleWallet extends Activity
             getBlobTask = null;
             if (blob == null) {
                 Log.d(TAG, "Failed blob retrieval. Returned null.");
-                return;
             }
-            Log.d(TAG, "Successful blob retrieval:\n" + blob.toString());
-            toBalance(blob);
+            else {
+                Log.d(TAG, "Successful blob retrieval:\n" + blob.toString());
+                toBalance(blob);
+            }
+            isGettingBlob = false;
         }
 
         @Override
