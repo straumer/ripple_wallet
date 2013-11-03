@@ -46,7 +46,7 @@
         <Button
             android:layout_width="119dp"
             android:layout_height="wrap_content"
-            android:onClick="populateAddress"
+            android:onClick="insertDemo"
             android:text="@string/demo" />
 
         <Button

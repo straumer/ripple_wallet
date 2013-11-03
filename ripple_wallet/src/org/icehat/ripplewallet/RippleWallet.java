@@ -1,10 +1,5 @@
 package org.icehat.ripplewallet;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.io.IOException;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,15 +7,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
-import android.content.Context;
 import android.os.AsyncTask;
 
-import com.codebutler.android_websockets.WebSocketClient;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 
 /** Starting activity with a log in screen.\ It contains a Websocket
  *  client that detects incoming JSON messages from the server and decides
@@ -35,7 +25,6 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public class RippleWallet extends Activity
 {
-    private WebSocketClient client;
     public SharedResources resources;
     public static EditText walletName;
     public static EditText passphrase;
@@ -58,19 +47,26 @@ public class RippleWallet extends Activity
         loginMessage = (TextView) findViewById(R.id.login_message);
     }
 
-
-    /** Extracts and returns the string inside a JSON response to account_info call.
-     *
-     *  @param message JSON response to account_info. 
-     *  @return The amount of XRPs specified in message.
+    /** Populates wallet name and passphrase for easier demoing.
      */
-    public String parseBalance(String message) throws JSONException{
-        JSONObject json = new JSONObject(message);
-        return json.getJSONObject("result")
-                   .getJSONObject("account_data")
-                   .get("Balance").toString();
+    public void insertDemo(View v) {
+    	walletName.setText("demo");
+    	passphrase.setText("demopass1");
     }
 
+    /** Attempts login with current wallet name and passphrase.
+     *
+     *  @throws JSONException
+     */
+    public void logIn(View v) {
+        
+        getBlobTask = new GetBlobTask();
+        String walletName = this.walletName.getText().toString();
+        String passphrase = this.passphrase.getText().toString();
+        getBlobTask.execute(walletName, passphrase);
+        Log.d(TAG, "Getting blob with " + "walletName: " + walletName + ", passphrase: " + passphrase);
+    }
+    
     /** Shifts to Balance Activity with blob in Intent.
      *
      *  @param balance Balance of the account.
@@ -80,25 +76,6 @@ public class RippleWallet extends Activity
         intent.putExtra("blob", blob.toString()); // Find a way bypass string conversion later.
         intent.putExtra("login", true);
         startActivity(intent);
-    }
-
-    /** Sends a request for account information to the server.
-     *  
-     *  @param address Address of account.
-     */
-    public void getAccountInfo(String address) throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put("command", "account_info");
-        json.put("account", address);
-        client.send(json.toString());
-    }
-    
-    /** Populates address field with dummy address for easier demoing
-     */
-    public void populateAddress(View view) {
-    	String dummy_address = "rLyDQiKG4j5rQUSuJvvNu5rTjtMZW96FhB";
-    	walletName.setText(dummy_address);
-    	Log.d(TAG, "PopAddress: "+ walletName.getText().toString());
     }
     
     /** A task to get the blob asynchronously from the blobvault.
@@ -113,7 +90,6 @@ public class RippleWallet extends Activity
                 return;
             }
             Log.d(TAG, "Successful blob retrieval:\n" + blob.toString());
-            Log.d(TAG, "Now logged in.");
             toBalance(blob);
         }
 
@@ -126,34 +102,5 @@ public class RippleWallet extends Activity
                 return null;
             }
         }
-    }
-    
-    /** Logs a user into a wallet with an address and password
-     *  specified in the activity's address and password fields.\ When
-     *  that occurs, appropriate information is stored and the activity
-     *  switches to wallet's balance activity.\ If the address or password
-     *  are invalid, an error message is displayed on screen.\
-     *  </p>
-     *  Note: Method in the making, now used only to show account balance.
-     *
-     *  @throws JSONException
-     */
-    public void logIn(View view) {
-
-        getBlobTask = new GetBlobTask();
-        String walletName = this.walletName.getText().toString();
-        String passphrase = this.passphrase.getText().toString();
-        getBlobTask.execute(walletName, passphrase);
-        Log.d(TAG, "Getting blob with " + "walletName: " + walletName + ", passphrase: " + passphrase);
-         
-        /*
-        try {
-            getAccountInfo(walletName.getText().toString());
-            Log.d(TAG, "Attempting to log in to walletName: " + walletName.toString());
-        } catch(JSONException e) {
-            Log.e(TAG, e.toString());
-            loginMessage.setText("Error: " + e.toString());
-        }
-        */
     }
 }

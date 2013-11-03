@@ -33,14 +33,14 @@ public class Balance extends Account
         if (getIntent().getBooleanExtra("login", false)) {
             try {
                 super.blob = new JSONObject(getIntent().getStringExtra("blob")); 
+                Log.d(TAG, "Now logged in. Blob stored.");
             }
             catch (JSONException e) {
                 Log.d(TAG, e.toString());
             }
         }
 
-
-        /*
+        /* Stuff for reference
         String balance = getIntent().getStringExtra(getString(R.string.log_tag));
         String address = getIntent().getStringExtra("address");
         TextView balanceView = (TextView) findViewById(R.id.balance_view);
