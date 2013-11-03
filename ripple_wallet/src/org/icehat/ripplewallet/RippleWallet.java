@@ -56,46 +56,6 @@ public class RippleWallet extends Activity
         walletName = (EditText) findViewById(R.id.wallet_name);
         passphrase = (EditText) findViewById(R.id.passphrase);
         loginMessage = (TextView) findViewById(R.id.login_message);
-
-        /*
-        client = new WebSocketClient(URI.create(rippleServerURI), new WebSocketClient.Listener() {
-
-            @Override
-            public void onConnect() {
-                Log.d(TAG, "Connected!");
-            }
-
-            @Override
-            public void onMessage(String message) {
-                Log.d(TAG, String.format("JSON received... %s", message));
-                TextView login_msg = (TextView)findViewById(R.id.login_msg);
-                try {
-                    String balance = parseBalance(message);
-                    Log.d(TAG, String.format("Balance is: %s", balance));
-                    toBalance(balance);
-                } catch (JSONException e) {
-                    Log.e(TAG, "Parsing error.");
-                    login_msg.setText("Address not found!");
-                }
-            }
-
-            @Override
-            public void onMessage(byte[] data) {
-                Log.d(TAG, "Got binary message!");
-            }
-
-            @Override
-            public void onDisconnect(int code, String reason) {
-                Log.d(TAG, String.format("Disconnected! Code: %d Reason: %s", code, reason));
-            }
-
-            @Override
-            public void onError(Exception error) {
-                Log.e(TAG, "Error!", error);
-            }
-        }, extraHeaders);
-        client.connect();
-        */
     }
 
 
@@ -111,14 +71,14 @@ public class RippleWallet extends Activity
                    .get("Balance").toString();
     }
 
-    /** Shifts to Balance Activity with balance in Intent.
+    /** Shifts to Balance Activity with blob in Intent.
      *
      *  @param balance Balance of the account.
      */
-    public void toBalance(String balance) {
+    public void toBalance(JSONObject blob) {
         Intent intent = new Intent(this, Balance.class);
-        intent.putExtra("address", walletName.getText().toString());
-        intent.putExtra(TAG, balance);       
+        intent.putExtra("blob", blob.toString()); // Find a way bypass string conversion later.
+        intent.putExtra("login", true);
         startActivity(intent);
     }
 
@@ -153,6 +113,8 @@ public class RippleWallet extends Activity
                 return;
             }
             Log.d(TAG, "Successful blob retrieval:\n" + blob.toString());
+            Log.d(TAG, "Now logged in.");
+            toBalance(blob);
         }
 
         @Override
@@ -179,8 +141,10 @@ public class RippleWallet extends Activity
     public void logIn(View view) {
 
         getBlobTask = new GetBlobTask();
-        getBlobTask.execute(walletName.getText().toString(), passphrase.getText().toString());
-        Log.d(TAG, "Getting blob...");
+        String walletName = this.walletName.getText().toString();
+        String passphrase = this.passphrase.getText().toString();
+        getBlobTask.execute(walletName, passphrase);
+        Log.d(TAG, "Getting blob with " + "walletName: " + walletName + ", passphrase: " + passphrase);
          
         /*
         try {
