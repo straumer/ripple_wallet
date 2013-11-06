@@ -8,4 +8,5 @@
     <string name="log_tag">RippleWallet</string>
     <string name="ripple_server">wss://s1.ripple.com</string>
     <string name="payward_blobvault">https://blobvault.payward.com/</string>
+    <string name="error_login">Login failed. Invalid wallet name or passphrase</string>
 </resources>

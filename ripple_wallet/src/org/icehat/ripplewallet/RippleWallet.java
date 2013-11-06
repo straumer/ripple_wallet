@@ -1,6 +1,7 @@
 package org.icehat.ripplewallet;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.app.ProgressDialog;
+import android.graphics.Color;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -43,6 +44,8 @@ public class RippleWallet extends Activity
         walletName = (EditText) findViewById(R.id.wallet_name);
         passphrase = (EditText) findViewById(R.id.passphrase);
         loginMessage = (TextView) findViewById(R.id.login_message);
+        loginMessage.setText("");
+        loginMessage.setTextColor(Color.RED);
         loginProcess = new ProgressDialog(this);
         loginProcess.setTitle("Logging in");
         loginProcess.setMessage("Wait for validation...");
@@ -97,6 +100,7 @@ public class RippleWallet extends Activity
             loginProcess.dismiss();
             if (blob == null) {
                 Log.d(TAG, "Failed blob retrieval. Returned null.");
+                loginMessage.setText(getString(R.string.error_login));
             }
             else {
                 Log.d(TAG, "Successful blob retrieval:\n" + blob.toString());
