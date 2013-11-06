@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.app.ProgressDialog;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -28,6 +29,7 @@ public class RippleWallet extends Activity
     public static EditText passphrase;
     public static TextView loginMessage; 
     public static GetBlobTask getBlobTask;
+    public static ProgressDialog loginProcess;
     public static String TAG;
     public static boolean isGettingBlob = false;
 
@@ -41,6 +43,9 @@ public class RippleWallet extends Activity
         walletName = (EditText) findViewById(R.id.wallet_name);
         passphrase = (EditText) findViewById(R.id.passphrase);
         loginMessage = (TextView) findViewById(R.id.login_message);
+        loginProcess = new ProgressDialog(this);
+        loginProcess.setTitle("Logging in");
+        loginProcess.setMessage("Wait for validation...");
     }
 
     /** Populates wallet name and passphrase for easier demoing.
@@ -83,11 +88,13 @@ public class RippleWallet extends Activity
         @Override
         protected void onPreExecute() {
             isGettingBlob = true;
+            loginProcess.show();
         }
         
         @Override
         protected void onPostExecute(final JSONObject blob) {
             getBlobTask = null;
+            loginProcess.dismiss();
             if (blob == null) {
                 Log.d(TAG, "Failed blob retrieval. Returned null.");
             }
