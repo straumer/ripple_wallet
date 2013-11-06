@@ -57,7 +57,6 @@ public class RippleWallet extends Activity
     public void logIn(View v) {
         
         if (!isGettingBlob) {
-            isGettingBlob = true;
             getBlobTask = new GetBlobTask();
             String walletName = this.walletName.getText().toString();
             String passphrase = this.passphrase.getText().toString();
@@ -80,6 +79,11 @@ public class RippleWallet extends Activity
     /** A task to get the blob asynchronously from the blobvault.
      */
     private class GetBlobTask extends AsyncTask<String, String, JSONObject> {
+        
+        @Override
+        protected void onPreExecute() {
+            isGettingBlob = true;
+        }
         
         @Override
         protected void onPostExecute(final JSONObject blob) {
