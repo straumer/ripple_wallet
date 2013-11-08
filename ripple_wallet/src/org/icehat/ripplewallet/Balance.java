@@ -41,14 +41,26 @@ public class Balance extends Account
             }
         }
 
-        // Gets address from blod
+        // Gets address from blob
         try {
 			address = blob.getString("account_id");
-		} catch (JSONException e) {
+		}
+        catch (JSONException e) {
 			Log.d(TAG, e.toString());
 		}
         
-        //this.getAccountInfo(blob.getString("account_id"));
+        // Use the address to get XRP and IOUs balances
+        
+        
+       try {
+    	   this.getAccountInfo(address);
+       }
+       catch (JSONException e) {
+    	   Log.d(TAG, e.toString());
+       }
+       
+       
+       
         /* Stuff for reference
         String balance = getIntent().getStringExtra(getString(R.string.log_tag));
         String address = getIntent().getStringExtra("address");
