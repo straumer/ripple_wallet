@@ -20,6 +20,7 @@ import org.json.JSONException;
 public class Balance extends Account
 {
     public static String TAG;
+    public static String address;
 
     /** Fills the relevant fields with information from RippleWallet
      */
@@ -40,6 +41,14 @@ public class Balance extends Account
             }
         }
 
+        // Gets address from blod
+        try {
+			address = blob.getString("account_id");
+		} catch (JSONException e) {
+			Log.d(TAG, e.toString());
+		}
+        
+        //this.getAccountInfo(blob.getString("account_id"));
         /* Stuff for reference
         String balance = getIntent().getStringExtra(getString(R.string.log_tag));
         String address = getIntent().getStringExtra("address");
