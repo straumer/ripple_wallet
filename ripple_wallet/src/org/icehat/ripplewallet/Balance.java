@@ -50,16 +50,12 @@ public class Balance extends Account
 		}
         
         // Use the address to get XRP and IOUs balances
-        
-        
-       try {
-    	   this.getAccountInfo(address);
-       }
-       catch (JSONException e) {
-    	   Log.d(TAG, e.toString());
-       }
-       
-       
+        try {
+            this.getAccountInfo(address);
+        }
+        catch (JSONException e) {
+            Log.d(TAG, e.toString());
+        }
        
         /* Stuff for reference
         String balance = getIntent().getStringExtra(getString(R.string.log_tag));

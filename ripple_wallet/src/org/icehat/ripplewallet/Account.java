@@ -37,7 +37,9 @@ public class Account extends Activity {
         resources.client.sendMessage(json);
     }
     
-    // Gets IOUs balance and trust line addresses with respective limits
+    /** Gets IOUs balance and trust line addresses with respective limits.
+     *  @param address Address of account.
+     */
     public void getAccountLines(String address) throws JSONException {
         JSONObject json = new JSONObject();
         json.put("command", "account_lines");
@@ -45,8 +47,6 @@ public class Account extends Activity {
         resources.client.sendMessage(json);
         resources.client.onMessage(json);
     }
-    
-    
     
     /** Extracts and returns the string inside a JSON response to account_info call.
      *  Note: Currently not in use. Here for future implementation.
