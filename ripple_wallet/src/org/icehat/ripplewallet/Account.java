@@ -17,10 +17,12 @@ import org.json.JSONException;
 public class Account extends Activity {
 
     protected static JSONObject blob;
+    public SharedResources resources;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resources = (SharedResources) getApplicationContext();
     }
     
     /** Sends a request for account information to the server.
@@ -28,12 +30,23 @@ public class Account extends Activity {
      *  
      *  @param address Address of account.
      */
-    public static void getAccountInfo(String address) throws JSONException {
+    public void getAccountInfo(String address) throws JSONException {
         JSONObject json = new JSONObject();
         json.put("command", "account_info");
         json.put("account", address);
-        //client.send(json.toString());
+        resources.client.sendMessage(json);
     }
+    
+    // Gets IOUs balance and trust line addresses with respective limits
+    public void getAccountLines(String address) throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("command", "account_lines");
+        json.put("account", address);
+        resources.client.sendMessage(json);
+        resources.client.onMessage(json);
+    }
+    
+    
     
     /** Extracts and returns the string inside a JSON response to account_info call.
      *  Note: Currently not in use. Here for future implementation.
