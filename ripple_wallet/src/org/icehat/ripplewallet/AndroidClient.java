@@ -58,6 +58,7 @@ public class AndroidClient extends Client {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                Log.d("RippleWallet", "Message arrived from server:\n" + msg.toString());
                 AndroidClient.super.onMessage(msg);
             }
         });
