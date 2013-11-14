@@ -64,7 +64,11 @@ public class RippleWallet extends Activity
      */
     public void logIn(View v) {
         
-        if (!isGettingBlob) {
+        if (!resources.isConnected()) {
+            Log.d(TAG, "Login rejected. Connection is down.");
+            loginMessage.setText(getString(R.string.error_login_connection_down));
+        }
+        else if (!isGettingBlob) {
             getBlobTask = new GetBlobTask();
             String walletName = this.walletName.getText().toString();
             String passphrase = this.passphrase.getText().toString();
@@ -100,7 +104,7 @@ public class RippleWallet extends Activity
             loginProcess.dismiss();
             if (blob == null) {
                 Log.d(TAG, "Failed blob retrieval. Returned null.");
-                loginMessage.setText(getString(R.string.error_login));
+                loginMessage.setText(getString(R.string.error_login_nullblob));
             }
             else {
                 Log.d(TAG, "Successful blob retrieval:\n" + blob.toString());
