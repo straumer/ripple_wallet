@@ -48,6 +48,7 @@ public class AndroidClient extends Client {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                connected = true;
                 Log.d("RippleWallet", "Connected to server!");
             }
         });
@@ -58,8 +59,8 @@ public class AndroidClient extends Client {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("RippleWallet", "Message arrived from server:\n" + msg.toString());
                 AndroidClient.super.onMessage(msg);
+                Log.d("RippleWallet", "Message arrived from server:\n" + msg.toString());
             }
         });
     }

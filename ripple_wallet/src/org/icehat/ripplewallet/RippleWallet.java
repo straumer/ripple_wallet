@@ -51,6 +51,12 @@ public class RippleWallet extends Activity
         loginProcess.setMessage("Wait for validation...");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loginMessage.setText("");
+    }
+
     /** Populates wallet name and passphrase for easier demoing.
      */
     public void insertDemo(View v) {

@@ -31,14 +31,25 @@ public class SharedResources extends Application {
         connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         paywardBlobVault = new BlobVault(getString(R.string.payward_blobvault));
         client = new AndroidClient();
-        client.connect(getString(R.string.ripple_server));
+        connectClient();
     }
 
-    /** Determine whether the device's network connection is up.
+    /** Determine whether network connection and websocket client are up.
+     *
+     *  @return True if network actions are executable. 
      */
     public boolean isConnected() {
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        boolean isConnected = activeNetwork != null && 
+                              activeNetwork.isConnectedOrConnecting() &&
+                              client.connected;
+        Log.d(getString(R.string.log_tag), "client.connected: " + String.valueOf(client.connected));
         return isConnected;
+    }
+
+    /** Connects client to server.
+     */
+    public void connectClient() {
+        client.connect(getString(R.string.ripple_server));
     }
 }
