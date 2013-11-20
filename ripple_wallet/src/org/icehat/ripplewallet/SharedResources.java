@@ -43,7 +43,6 @@ public class SharedResources extends Application {
         boolean isConnected = activeNetwork != null && 
                               activeNetwork.isConnectedOrConnecting() &&
                               client.connected;
-        Log.d(getString(R.string.log_tag), "client.connected: " + String.valueOf(client.connected));
         return isConnected;
     }
 
