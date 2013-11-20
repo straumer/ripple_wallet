@@ -10,4 +10,13 @@
     <string name="payward_blobvault">https://blobvault.payward.com/</string>
     <string name="error_login_nullblob">Login failed. Invalid wallet name or passphrase.</string>
     <string name="error_login_connection_down">Login failed. Network connection is down.</string>
+
+    <string name="currency_prompt">Currency</string>
+ 
+    <string-array name="currencies">
+        <item>XRP - Ripples</item>
+        <item>USD - US Dollar</item>
+        <item>BTC - Bitcoin</item>
+    </string-array>
+
 </resources>
