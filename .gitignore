@@ -1,3 +1,5 @@
 # No binaries.
 *.swp
 ripple_wallet/bin/*
+ripple_wallet/tests/bin/*
+ripple_wallet/tests/gen/*

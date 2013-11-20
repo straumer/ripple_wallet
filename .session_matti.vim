@@ -61,7 +61,7 @@ badd +1 ripple_wallet/res/values/strings.xml
 badd +1 ripple_wallet/res/layout/main.xml
 badd +1 ripple_wallet/res/layout/balance.xml
 badd +8 ripple_wallet/src/org/icehat/ripplewallet/ConnectivityStateReceiver.java
-badd +0 ripple_wallet/src/org/icehat/ripplewallet/ConnectivityChangeReceiver.java
+badd +1 ripple_wallet/src/org/icehat/ripplewallet/ConnectivityChangeReceiver.java
 args ~/Dropbox/courses/Hugbúnaðarverkefni_1/ripple_wallet/ripple_wallet/src/org/icehat/ripplewallet/RippleWallet.java
 edit ripple_wallet/src/org/icehat/ripplewallet/SharedResources.java
 set splitbelow splitright
@@ -171,12 +171,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 43 - ((42 * winheight(0) + 25) / 51)
+let s:l = 50 - ((40 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-43
-normal! 0
+50
+normal! 025|
 tabedit ripple_wallet/src/org/icehat/ripplewallet/ConnectivityChangeReceiver.java
 set splitbelow splitright
 set nosplitbelow
@@ -285,11 +285,11 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 6 - ((5 * winheight(0) + 25) / 51)
+let s:l = 17 - ((16 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-6
+17
 normal! 0
 tabedit ripple_wallet/src/org/icehat/ripplewallet/AndroidClient.java
 set splitbelow splitright
@@ -399,11 +399,11 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 60 - ((34 * winheight(0) + 25) / 51)
+let s:l = 52 - ((29 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-60
+52
 normal! 031|
 tabedit ripple_wallet/src/org/icehat/ripplewallet/RippleWallet.java
 set splitbelow splitright
@@ -513,12 +513,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 10 - ((9 * winheight(0) + 25) / 51)
+let s:l = 83 - ((44 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-10
-normal! 0
+83
+normal! 05|
 tabedit ripple_wallet/src/org/icehat/ripplewallet/Account.java
 set splitbelow splitright
 set nosplitbelow
@@ -1317,7 +1317,7 @@ exe s:l
 normal! zt
 17
 normal! 0
-tabnext 2
+tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

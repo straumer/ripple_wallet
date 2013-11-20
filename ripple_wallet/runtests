@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Compiles and (re)installs test package on default device/emulator,
+# then runs the tests and displays results.
+
+cd tests
+ant debug
+adb install -r bin/rwtest-debug.apk
+adb shell am instrument -w org.icehat.ripplewallet.tests/android.test.InstrumentationTestRunner
