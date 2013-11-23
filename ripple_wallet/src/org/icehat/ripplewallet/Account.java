@@ -45,7 +45,6 @@ public class Account extends Activity {
         json.put("command", "account_lines");
         json.put("account", address);
         resources.client.sendMessage(json);
-        resources.client.onMessage(json);
     }
     
     /** Extracts and returns the string inside a JSON response to account_info call.

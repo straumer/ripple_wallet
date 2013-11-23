@@ -6,8 +6,10 @@ import android.util.Log;
 
 import com.ripple.client.Client;
 import com.ripple.client.ClientLogger;
+import com.ripple.client.enums.Message;
 import com.ripple.client.transport.impl.JavaWebSocketTransportImpl;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /** A websocket client to connect to server and handle messages from/to
@@ -21,6 +23,10 @@ import org.json.JSONObject;
 public class AndroidClient extends Client {
 
     Handler handler;
+    public static String TAG = "RippleWallet";
+    String account_data = "";
+    String account_lines = "";
+    String error = "";
 
     public AndroidClient() {
         super(new JavaWebSocketTransportImpl());
@@ -60,7 +66,12 @@ public class AndroidClient extends Client {
             @Override
             public void run() {
                 AndroidClient.super.onMessage(msg);
-                Log.d("RippleWallet", "Message arrived from server:\n" + msg.toString());
+                Log.d(TAG, "Message arrived from server:\n" + msg);
+                 try {
+					handleMessage(msg);
+				} catch (JSONException e) {
+					Log.d(TAG, e.toString());
+				}
             }
         });
     }
@@ -73,5 +84,22 @@ public class AndroidClient extends Client {
 
     public void run(Runnable runnable) {
         handler.post(runnable);
+    }
+    
+    public void handleMessage(final JSONObject msg) throws JSONException{
+    	String status = "";
+    	status = msg.get("status").toString();
+    	if (status.equals("success")) {
+    		if (msg.getJSONObject("result").has("account_data")) {
+    			account_data = msg.toString();
+    		}
+    		else if (msg.getJSONObject("result").has("lines")) {
+    			account_lines = msg.toString();
+    		}
+    	}
+    	else {
+    		error = msg.get("error").toString();
+    		Log.d(TAG, error);
+    	}
     }
 }

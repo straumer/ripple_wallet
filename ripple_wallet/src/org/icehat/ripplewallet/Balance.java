@@ -52,14 +52,29 @@ public class Balance extends Account
         // Use the address to get XRP and IOUs balances
         try {
             this.getAccountInfo(address);
+            this.getAccountLines(address);
         }
         catch (JSONException e) {
             Log.d(TAG, e.toString());
         }
-       
+        
+        // Wait until the messages arrive
+        while (resources.client.account_lines.equals("") ||
+        		resources.client.account_data.equals("")) {
+        	if (!resources.client.error.equals("")) break;
+        }
+        //Log.d(TAG, resources.client.account_data);
+        
         /* Stuff for reference
         String balance = getIntent().getStringExtra(getString(R.string.log_tag));
-        String address = getIntent().getStringExtra("address");
+        String address = getIntent().getStringExtra("address");*/
+        
+        String balance = "0";
+		try {
+			balance = parseBalance(resources.client.account_data.toString());
+		} catch (JSONException e) {
+			Log.d(TAG, e.toString());
+		}
         TextView balanceView = (TextView) findViewById(R.id.balance_view);
         TextView accountView = (TextView) findViewById(R.id.account);
         
@@ -67,6 +82,7 @@ public class Balance extends Account
         
         balanceView.setText("Balance: " + b + " XRP");
         accountView.setText("Account: " + address);
-        */
+        
+        // TODO: Parsing account_lines and display them dynamicaly
     }
 }
