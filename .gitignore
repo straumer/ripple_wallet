@@ -2,7 +2,6 @@
 *.swp
 ripple_wallet/bin/*
 ripple_wallet/tests/bin/*
-ripple_wallet/tests/gen/*
-ripple_wallet/gen/*
+**/gen/**/*
 session_matti.vim
 workspace_matti
