@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.content.Intent;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -40,25 +41,30 @@ public class Account extends Activity {
      * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Take appropriate action for each action item click
+        
         switch (item.getItemId()) {
         case R.id.send:
-            // send activity
+            startActivity(new Intent(this, Send.class));
             return true;
         case R.id.receive:
-            // receive activity
             return true;
         case R.id.balance:
-            // balance activity
+            startActivity(new Intent(this, Balance.class));
             return true;
         case R.id.logout:
-            // logout action
+            logOut();
             return true;
         default:
             return super.onOptionsItemSelected(item);
         }
     }
 
+    /** Cleans up logged in session and goes back to login screen.
+     */
+    private void logOut() {
+        blob = null;
+        startActivity(new Intent(this, RippleWallet.class));
+    }
     
     /** Sends a request for account information to the server.
      *  Note: Currently not working. Here for future implementation.

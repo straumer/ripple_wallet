@@ -24,7 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name="org.icehat.ripplewallet.Balance"
-                  android:label="@string/app_name"
+                  android:parentActivityName="org.icehat.ripplewallet.RippleWallet">
+        </activity>
+        <activity android:name="org.icehat.ripplewallet.Send"
                   android:parentActivityName="org.icehat.ripplewallet.RippleWallet">
         </activity>
         <receiver android:name="org.icehat.ripplewallet.ConnectivityChangeReceiver">

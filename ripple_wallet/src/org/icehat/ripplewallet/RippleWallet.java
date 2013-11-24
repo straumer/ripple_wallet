@@ -82,18 +82,6 @@ public class RippleWallet extends Activity
             Log.d(TAG, "Getting blob with " + "walletName: " + walletName + ", passphrase: " + passphrase);
         }
     }
-    
-    /** Shifts to Balance Activity with blob in Intent.
-    *
-    *  @param balance Balance of the account.
-    */
-    public void toSend(JSONObject blob) {
-        Intent intent = new Intent(this, Send.class);
-        intent.putExtra("blob", blob.toString()); // Find a way bypass string conversion later.
-        intent.putExtra("login", true);
-        startActivity(intent);
-    }
-
 
     /** Shifts to Balance Activity with blob in Intent.
      *
