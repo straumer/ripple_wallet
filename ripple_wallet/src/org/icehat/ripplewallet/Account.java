@@ -24,6 +24,39 @@ public class Account extends Activity {
         super.onCreate(savedInstanceState);
         resources = (SharedResources) getApplicationContext();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+ 
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * On selecting action bar icons
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.send:
+            // send activity
+            return true;
+        case R.id.receive:
+            // receive activity
+            return true;
+        case R.id.balance:
+            // balance activity
+            return true;
+        case R.id.logout:
+            // logout action
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
     
     /** Sends a request for account information to the server.
      *  Note: Currently not working. Here for future implementation.

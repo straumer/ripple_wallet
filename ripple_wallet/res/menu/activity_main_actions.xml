@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/send"
+          android:title="Send"
+    <item/>
+    <item android:id="@+id/receive"
+          android:title="Receive"
+    <item/>
+    <item android:id="@+id/balance"
+          android:title="Balance"
+    <item/>
+    <item android:id="@+id/logout"
+          android:title="Logout"
+    <item/>
+</menu>
