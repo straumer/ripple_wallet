@@ -40,12 +40,15 @@ public class Send extends Account
     public static EditText to_address;
     public static EditText to_value;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.send);
         TAG = getString(R.string.log_tag);
+
 
         // Gets address from blob
         try {

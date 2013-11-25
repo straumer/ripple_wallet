@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.util.Log;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -21,12 +22,14 @@ import org.json.JSONException;
 public class Account extends Activity {
 
     protected static JSONObject blob;
-    public SharedResources resources;
+    protected static SharedResources resources;
+    protected static String address;
+    protected static String secret;
+    protected static  String TAG;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        resources = (SharedResources) getApplicationContext();
     }
 
     @Override
@@ -47,6 +50,7 @@ public class Account extends Activity {
             startActivity(new Intent(this, Send.class));
             return true;
         case R.id.receive:
+            startActivity(new Intent(this, Receive.class));
             return true;
         case R.id.balance:
             startActivity(new Intent(this, Balance.class));
@@ -58,11 +62,29 @@ public class Account extends Activity {
             return super.onOptionsItemSelected(item);
         }
     }
+    
+    /** Sets up variables for the logged in session.
+     */
+    protected void logIn() {
+        TAG = getString(R.string.log_tag);
+        resources = (SharedResources) getApplicationContext();
+        try {
+            blob = new JSONObject(getIntent().getStringExtra("blob")); 
+            address = blob.getString("account_id");
+            secret = blob.getString("master_seed");
+            Log.d(TAG, "Now logged in. Blob stored.");
+        }
+        catch (JSONException e) {
+            Log.d(TAG, "logIn() error, " + e.toString());
+        }
+    }
 
     /** Cleans up logged in session and goes back to login screen.
      */
     private void logOut() {
         blob = null;
+        address = null;
+        secret = null;
         startActivity(new Intent(this, RippleWallet.class));
     }
     

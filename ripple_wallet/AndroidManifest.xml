@@ -29,6 +29,9 @@
         <activity android:name="org.icehat.ripplewallet.Send"
                   android:parentActivityName="org.icehat.ripplewallet.RippleWallet">
         </activity>
+        <activity android:name="org.icehat.ripplewallet.Receive"
+                  android:parentActivityName="org.icehat.ripplewallet.RippleWallet">
+        </activity>
         <receiver android:name="org.icehat.ripplewallet.ConnectivityChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
