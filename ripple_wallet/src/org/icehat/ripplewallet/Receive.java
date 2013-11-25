@@ -14,7 +14,7 @@ import org.json.JSONException;
  *  @author Sigyn Jónsdóttir
  */
 
-public class Receive extends Account
+public class Receive extends Session
 {
     private static TextView addressView; 
 

@@ -25,7 +25,7 @@ import org.json.JSONException;
  *  @author Sigyn Jónsdóttir
  *  @version Thu Oct 17 16:54:38 GMT 2013
  */
-public class Balance extends Account
+public class Balance extends Session
 {
     /** Fills the relevant fields with information from RippleWallet
      */
