@@ -11,6 +11,9 @@ import android.util.Log;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import com.ripple.client.Account;
+import com.ripple.client.transactions.TransactionManager;
+
 /** Keeps wallet information for the logged in session.
  *  Activities that deal with the account inherit from this class.
  *
@@ -19,13 +22,15 @@ import org.json.JSONException;
  *  @author Daniel Eduardo Pinedo Quintero
  *  @author Sigyn Jónsdóttir
  */
-public class Account extends Activity {
+public class Session extends Activity {
 
     protected static JSONObject blob;
     protected static SharedResources resources;
     protected static String address;
     protected static String secret;
     protected static  String TAG;
+    protected static Account account;
+    protected static TransactionManager transactionManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,8 @@ public class Account extends Activity {
             blob = new JSONObject(getIntent().getStringExtra("blob")); 
             address = blob.getString("account_id");
             secret = blob.getString("master_seed");
+            account = resources.client.accountFromSeed(secret);
+            transactionManager = account.transactionManager();
             Log.d(TAG, "Now logged in. Blob stored.");
         }
         catch (JSONException e) {

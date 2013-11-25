@@ -22,7 +22,7 @@ import org.json.JSONException;
  *  @author Daniel Eduardo Pinedo Quintero
  *  @author Sigyn Jónsdóttir
  */
-public class Send extends Account
+public class Send extends Session
 {
     private static final int ID_SIGN = 300;
     private static EditText toAddress;
