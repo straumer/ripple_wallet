@@ -49,7 +49,6 @@ public class Send extends Session
         setContentView(R.layout.send);
         toAddress = (EditText) findViewById(R.id.to_address);
         toValue = (EditText) findViewById(R.id.to_value);
-
         // Offer autocomplete or select from list of contacts
          
         // Show recipient address on selected 
@@ -59,49 +58,10 @@ public class Send extends Session
     }
 
     /** Sends a given amount of a given currency to the given address.
+     * @throws JSONException 
      */
-    public void send(View v) {
+    public void send(View v) throws JSONException {
        
-        Transaction transaction = transactionManager.payment();
-        transaction.put(AccountID.Destination, toAddress.getText().toString());
-        transaction.put(Amount.Amount, toValue.getText().toString());
-
-        transaction.once(Transaction.OnSumbitRequestError.class, new Transaction.OnSumbitRequestError() {
-            @Override
-            public void called(Exception e) {
-                Log.d(TAG, "SumbitRequestError response: " + e);
-            }
-        });
-
-        transaction.once(Transaction.OnSubmitError.class, new Transaction.OnSubmitError() {
-            @Override
-            public void called(Response response) {
-                Log.d(TAG, "SubmitError response: " + response.engineResult());
-            }
-        });
-
-        transaction.once(Transaction.OnSubmitSuccess.class, new Transaction.OnSubmitSuccess() {
-            @Override
-            public void called(Response response) {
-                Log.d(TAG, "SubmitSuccess response: " + response.engineResult());
-            }
-        });
-
-        transaction.once(Transaction.OnTransactionValidated.class, new Transaction.OnTransactionValidated() {
-            @Override
-            public void called(TransactionResult result) {
-                Log.d(TAG, "Transaction finalized on ledger: " + result.ledgerIndex);
-                try {
-                    Log.d(TAG, "Transaction message:\n" + result.message.toString(4));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        transactionManager.queue(transaction); 
-        
-        /*
         JSONObject json = new JSONObject();
         json.put("id", ID_SIGN);
         json.put("command", "sign");
@@ -110,13 +70,13 @@ public class Send extends Session
         JSONObject tx = new JSONObject();
         tx.put("TransactionType", "Payment");
         tx.put("Account", address);
-        tx.put("Amount", amount);
-        tx.put("Destination", toAddress.getText().getString());
+        tx.put("Amount", toValue.getText().toString());
+        tx.put("Destination", toAddress.getText().toString());
         
         json.put("tx_json", tx);
         
         resources.client.sendMessage(json);
-        */
+        
     }
 
     /** For demoing.
