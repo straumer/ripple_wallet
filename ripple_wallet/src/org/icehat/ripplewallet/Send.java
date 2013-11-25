@@ -18,16 +18,11 @@ import org.json.JSONException;
 
 public class Send extends Account
 {
-    public static String TAG;
-    public static String address;
-    public SharedResources resources;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        TAG = getString(R.string.log_tag);
 
     	// Show balance
 

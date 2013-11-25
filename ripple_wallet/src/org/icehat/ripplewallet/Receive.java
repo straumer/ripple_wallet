@@ -1,9 +1,7 @@
 package org.icehat.ripplewallet;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.util.Log;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -18,10 +16,14 @@ import org.json.JSONException;
 
 public class Receive extends Account
 {
+    private static TextView addressView; 
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.receive);
+        addressView = (TextView) findViewById(R.id.address);
+        addressView.setText("Address: " + address);
     }
 }
