@@ -1,6 +1,8 @@
 package org.icehat.ripplewallet;
 
 import java.util.ArrayList;
+import java.lang.Exception;
+import java.lang.RuntimeException;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,6 +16,12 @@ import android.view.View;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
+
+import com.ripple.core.types.AccountID;
+import com.ripple.core.types.Amount;
+import com.ripple.client.transactions.Transaction;
+import com.ripple.client.transactions.TransactionMessage.TransactionResult;
+import com.ripple.client.Response;
 
 /** Transfer / Send currency to Ripple user
  *
@@ -52,7 +60,46 @@ public class Send extends Session
 
     /** Sends a given amount of a given currency to the given address.
      */
-    public void send(View v) throws NumberFormatException, JSONException {
+    public void send(View v) {
+       
+        Transaction transaction = transactionManager.payment();
+        transaction.put(AccountID.Destination, toAddress.getText().toString());
+        transaction.put(Amount.Amount, toValue.getText().toString());
+
+        transaction.once(Transaction.OnSumbitRequestError.class, new Transaction.OnSumbitRequestError() {
+            @Override
+            public void called(Exception e) {
+                Log.d(TAG, "SumbitRequestError response: " + e);
+            }
+        });
+
+        transaction.once(Transaction.OnSubmitError.class, new Transaction.OnSubmitError() {
+            @Override
+            public void called(Response response) {
+                Log.d(TAG, "SubmitError response: " + response.engineResult());
+            }
+        });
+
+        transaction.once(Transaction.OnSubmitSuccess.class, new Transaction.OnSubmitSuccess() {
+            @Override
+            public void called(Response response) {
+                Log.d(TAG, "SubmitSuccess response: " + response.engineResult());
+            }
+        });
+
+        transaction.once(Transaction.OnTransactionValidated.class, new Transaction.OnTransactionValidated() {
+            @Override
+            public void called(TransactionResult result) {
+                Log.d(TAG, "Transaction finalized on ledger: " + result.ledgerIndex);
+                try {
+                    Log.d(TAG, "Transaction message:\n" + result.message.toString(4));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        transactionManager.queue(transaction); 
         
         /*
         JSONObject json = new JSONObject();
