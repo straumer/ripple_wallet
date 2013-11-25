@@ -29,6 +29,13 @@
             android:layout_weight="0.17"
             android:text="Balance: XRP"
             android:textSize="15pt" />
+        <ScrollView 
+                android:id="@+id/scrollView1"
+                android:layout_weight="1" 
+                android:layout_width="fill_parent" 
+                android:layout_marginBottom="50px" 
+                android:layout_height="fill_parent">
+        </ScrollView>
     </LinearLayout>
 
 </LinearLayout>
