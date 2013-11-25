@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.util.Log;
+import android.util.TypedValue;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -59,13 +60,9 @@ public class Balance extends Account
 		} catch (JSONException e) {
 			Log.d(TAG, e.toString());
 		}
-        TextView balanceView = (TextView) findViewById(R.id.balance_view);
-        TextView accountView = (TextView) findViewById(R.id.account);
         
+		// Converts from drops to whole units
         double b = Double.parseDouble(balance)/1000000;
-        
-        balanceView.setText("Balance: " + b + " XRP");
-        accountView.setText("Account: " + address);
         
         // Dinamic display test. Still need to add the real data
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,11 +74,19 @@ public class Balance extends Account
         // Create a LinearLayout element
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
+        
+        // Adds XRP Balance
+        TextView XRPBalance = new TextView(this);
+        XRPBalance.setText("Balance: " + b + " XRP");
+        XRPBalance.setTextSize(TypedValue.COMPLEX_UNIT_PT, 15);
+        ll.addView(XRPBalance);
+        
         TextView tv[] = new TextView[50];
         for (int i = 0; i < 50; i++) {
                 // Add text
                 tv[i] = new TextView(this);
                 tv[i].setText("my text " + i);
+                tv[i].setTextSize(TypedValue.COMPLEX_UNIT_PT, 15);
                 ll.addView(tv[i]);
         }
                 // Add the LinearLayout element to the ScrollView

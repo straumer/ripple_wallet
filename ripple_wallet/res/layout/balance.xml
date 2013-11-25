@@ -16,19 +16,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Account: " />
-
-        <TextView
-            android:id="@+id/balance_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.17"
-            android:text="Balance: XRP"
-            android:textSize="15pt" />
         <ScrollView 
                 android:id="@+id/scrollView1"
                 android:layout_weight="1" 
