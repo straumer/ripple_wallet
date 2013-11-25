@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
@@ -111,8 +112,6 @@ public class Account extends Activity {
     }
     
     /** Extracts and returns the string inside a JSON response to account_info call.
-     *  Note: Currently not in use. Here for future implementation.
-     *
      *  @param message JSON response to account_info. 
      *  @return The amount of XRPs specified in message.
      */
@@ -121,5 +120,25 @@ public class Account extends Activity {
         return json.getJSONObject("result")
                    .getJSONObject("account_data")
                    .get("Balance").toString();
+    }
+    
+    /** Extracts currency tickers and their balances adding together duplicates
+     *  @param message JSON response to account_lines. 
+     *  @return JSON keys are tickers and values are corresponding balances.
+     */
+    public static JSONObject parseAndMergeLines(String message) throws JSONException {
+    	JSONArray json = new JSONObject(message).getJSONObject("result")
+    			.getJSONArray("lines");
+    	JSONObject tickers = new JSONObject();
+    	for (int i = 0; i < json.length(); i++) {
+    		String ticker = json.getJSONObject(i).getString("currency");
+    		Double balance = Double.parseDouble(
+    				json.getJSONObject(i).getString("balance"));
+    		if (tickers.has(ticker)) {
+    			tickers.put(ticker,	tickers.getDouble(ticker) +	balance);
+    		}
+    		else tickers.put(ticker, balance);
+    	}
+    	return tickers;
     }
 }

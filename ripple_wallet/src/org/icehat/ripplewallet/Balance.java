@@ -1,5 +1,7 @@
 package org.icehat.ripplewallet;
 
+import java.util.Iterator;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -64,6 +66,13 @@ public class Balance extends Account
 		// Converts from drops to whole units
         double b = Double.parseDouble(balance)/1000000;
         
+        JSONObject tickers = new JSONObject();
+        try {
+        	tickers = parseAndMergeLines(resources.client.account_lines);
+		} catch (JSONException e) {
+			Log.d(TAG, e.toString());
+		}
+        
         // Dinamic display test. Still need to add the real data
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.balance, null);
@@ -81,13 +90,22 @@ public class Balance extends Account
         XRPBalance.setTextSize(TypedValue.COMPLEX_UNIT_PT, 15);
         ll.addView(XRPBalance);
         
-        TextView tv[] = new TextView[50];
-        for (int i = 0; i < 50; i++) {
-                // Add text
-                tv[i] = new TextView(this);
-                tv[i].setText("my text " + i);
-                tv[i].setTextSize(TypedValue.COMPLEX_UNIT_PT, 15);
-                ll.addView(tv[i]);
+        Iterator<String> keys = tickers.keys();
+        String key;
+        TextView tv[] = new TextView[tickers.length()];
+        for (int i = 0; i < tickers.length(); i++) {
+        	key = keys.next();
+
+        	// Add text
+            tv[i] = new TextView(this);
+            try {
+				tv[i].setText(tickers.getDouble(key) + " " + key);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            tv[i].setTextSize(TypedValue.COMPLEX_UNIT_PT, 15);
+            ll.addView(tv[i]);
         }
                 // Add the LinearLayout element to the ScrollView
                 sv.addView(ll);
