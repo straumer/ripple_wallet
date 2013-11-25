@@ -52,14 +52,22 @@
                     android:entries="@array/currencies"
                     android:prompt="@string/currency_prompt" />
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
             <Button
-                android:id="@+id/btnSend"
+                android:id="@+id/send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="sendCurrency"
+                android:onClick="send"
                 android:text="Send" />
-
+            <Button
+                android:id="@+id/demo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="insertDemo"
+                android:text="Demo" />
+            </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
