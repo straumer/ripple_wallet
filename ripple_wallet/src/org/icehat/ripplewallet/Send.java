@@ -33,6 +33,7 @@ import com.ripple.client.Response;
 public class Send extends Session
 {
     private static final int ID_SIGN = 300;
+    private static final int ID_SUBMIT = 301;
     private static EditText toAddress;
     private static EditText toValue;
 
@@ -61,7 +62,7 @@ public class Send extends Session
      * @throws JSONException 
      */
     public void send(View v) throws JSONException {
-       
+    	
         JSONObject json = new JSONObject();
         json.put("id", ID_SIGN);
         json.put("command", "sign");
@@ -76,7 +77,15 @@ public class Send extends Session
         json.put("tx_json", tx);
         
         resources.client.sendMessage(json);
-        
+                
+    }
+    
+    public static void submitTransaction(String tx_blob) throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("id", ID_SUBMIT);
+        json.put("command", "submit");
+        json.put("tx_blob", tx_blob);
+        resources.client.sendMessage(json);
     }
 
     /** For demoing.

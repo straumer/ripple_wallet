@@ -26,6 +26,7 @@ public class AndroidClient extends Client {
     public static String TAG = "RippleWallet";
     String account_data = "";
     String account_lines = "";
+    String tx_blob = "";
     String error = "";
 
     public AndroidClient() {
@@ -96,6 +97,13 @@ public class AndroidClient extends Client {
     		else if (msg.getJSONObject("result").has("lines")) {
     			account_lines = msg.toString();
     		}
+    		
+            if(msg.get("id").equals(300)) {
+                // Send money response
+                tx_blob = msg.getJSONObject("result").getJSONObject("tx_blob").toString();
+                Send s = new Send();
+                s.submitTransaction(tx_blob);   
+            }
     	}
     	else {
     		error = msg.get("error").toString();
