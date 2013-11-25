@@ -69,13 +69,13 @@ public class Account extends Activity {
         TAG = getString(R.string.log_tag);
         resources = (SharedResources) getApplicationContext();
         try {
-            this.blob = new JSONObject(getIntent().getStringExtra("blob")); 
-            this.address = this.blob.getString("account_id");
-            this.secret = this.blob.getString("master_seed");
+            blob = new JSONObject(getIntent().getStringExtra("blob")); 
+            address = blob.getString("account_id");
+            secret = blob.getString("master_seed");
             Log.d(TAG, "Now logged in. Blob stored.");
         }
         catch (JSONException e) {
-            Log.d(TAG, e.toString());
+            Log.d(TAG, "logIn() error, " + e.toString());
         }
     }
 
