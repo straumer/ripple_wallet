@@ -18,7 +18,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 		
 		<EditText
-            android:id="@+id/editText1"
+            android:id="@+id/to_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10" >
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content" >
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/to_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
