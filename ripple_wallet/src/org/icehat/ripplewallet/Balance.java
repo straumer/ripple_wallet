@@ -65,6 +65,7 @@ public class Balance extends Session
         
 		// Converts from drops to whole units
         double b = Double.parseDouble(balance)/1000000;
+        double fBalance = Double.parseDouble(df.format(b));
         
         JSONObject tickers = new JSONObject();
         try {
@@ -84,9 +85,14 @@ public class Balance extends Session
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
         
+        TextView balanceTitle = new TextView(this);
+        balanceTitle.setText("Balance:");
+        balanceTitle.setTextSize(TypedValue.COMPLEX_UNIT_PT, 18);
+        ll.addView(balanceTitle);
+        
         // Adds XRP Balance
         TextView XRPBalance = new TextView(this);
-        XRPBalance.setText("Balance: " + b + " XRP");
+        XRPBalance.setText(fBalance + " XRP");
         XRPBalance.setTextSize(TypedValue.COMPLEX_UNIT_PT, 15);
         ll.addView(XRPBalance);
         

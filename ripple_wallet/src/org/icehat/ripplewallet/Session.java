@@ -1,5 +1,7 @@
 package org.icehat.ripplewallet;
 
+import java.text.DecimalFormat;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +34,7 @@ public class Session extends Activity {
     protected static  String TAG;
     protected static Account account;
     protected static TransactionManager transactionManager;
+    static DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,7 +134,7 @@ public class Session extends Activity {
     
     /** Extracts currency tickers and their balances adding together duplicates
      *  @param message JSON response to account_lines. 
-     *  @return JSON keys are tickers and values are corresponding balances.
+     *  @return JSON where keys are tickers and values are corresponding balances.
      */
     public static JSONObject parseAndMergeLines(String message) throws JSONException {
     	JSONArray json = new JSONObject(message).getJSONObject("result")
@@ -141,10 +144,11 @@ public class Session extends Activity {
     		String ticker = json.getJSONObject(i).getString("currency");
     		Double balance = Double.parseDouble(
     				json.getJSONObject(i).getString("balance"));
+    		Double fBalance = Double.parseDouble(df.format(balance));
     		if (tickers.has(ticker)) {
-    			tickers.put(ticker,	tickers.getDouble(ticker) +	balance);
+    			tickers.put(ticker,	tickers.getDouble(ticker) +	fBalance);
     		}
-    		else tickers.put(ticker, balance);
+    		else tickers.put(ticker, fBalance);
     	}
     	return tickers;
     }
