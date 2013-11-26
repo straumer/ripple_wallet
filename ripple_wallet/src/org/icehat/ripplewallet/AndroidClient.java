@@ -97,12 +97,12 @@ public class AndroidClient extends Client {
     		else if (msg.getJSONObject("result").has("lines")) {
     			account_lines = msg.toString();
     		}
-    		
             if(msg.get("id").equals(300)) {
                 // Send money response
-                tx_blob = msg.getJSONObject("result").getJSONObject("tx_blob").toString();
-                Send s = new Send();
-                s.submitTransaction(tx_blob);   
+                String tx_blob = msg.getJSONObject("result");
+                Log.d(TAG, "TX_BLOB: "+tx_blob );
+                JSONObject tx_blog_json = new JSONObject(tx_blob);
+                Send.submitTransaction(tx_blob);   
             }
     	}
     	else {
