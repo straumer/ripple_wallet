@@ -6,4 +6,4 @@
 cd tests
 ant debug
 adb install -r bin/rwtest-debug.apk
-adb shell am instrument -w org.icehat.ripplewallet.tests/android.test.InstrumentationTestRunner
+adb shell am instrument -w -e class org.icehat.ripplewallet.TestSend org.icehat.ripplewallet.tests/android.test.InstrumentationTestRunner

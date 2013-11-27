@@ -92,7 +92,7 @@ public class Session extends Activity {
 
     /** Cleans up logged in session and goes back to login screen.
      */
-    private void logOut() {
+    public void logOut() {
         blob = null;
         address = null;
         secret = null;

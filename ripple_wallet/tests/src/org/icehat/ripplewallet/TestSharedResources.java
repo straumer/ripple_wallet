@@ -4,6 +4,7 @@ import android.test.ApplicationTestCase;
 import java.util.concurrent.CountDownLatch;
 import java.lang.InterruptedException;
 import java.lang.Thread;
+import java.lang.Exception;
 import android.net.wifi.WifiManager;
 import android.content.Context;
 import android.util.Log;
@@ -17,7 +18,9 @@ public class TestSharedResources extends ApplicationTestCase<SharedResources> {
         super(SharedResources.class);
     }
 
-    protected void setUp() {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         createApplication();
         resources = getApplication();
         wifi = (WifiManager) resources.getSystemService(Context.WIFI_SERVICE);

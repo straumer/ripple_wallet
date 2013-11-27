@@ -4,4 +4,5 @@ ripple_wallet/bin/*
 ripple_wallet/tests/bin/*
 **/gen/**/*
 session_matti.vim
+session_test_matti.vim
 workspace_matti
