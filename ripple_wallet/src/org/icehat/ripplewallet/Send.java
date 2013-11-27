@@ -36,6 +36,7 @@ public class Send extends Session
     private static final int ID_SUBMIT = 301;
     private static EditText toAddress;
     private static EditText toValue;
+    private static TextView transactionStatus;
 
     /* Populate spinner TODO
     Spinner contacts;
@@ -50,6 +51,7 @@ public class Send extends Session
         setContentView(R.layout.send);
         toAddress = (EditText) findViewById(R.id.to_address);
         toValue = (EditText) findViewById(R.id.to_value);
+        transactionStatus = (TextView) findViewById(R.id.transaction_result);
         // Offer autocomplete or select from list of contacts
          
         // Show recipient address on selected 
@@ -63,29 +65,39 @@ public class Send extends Session
      */
     public void send(View v) throws JSONException {
     	
-        JSONObject json = new JSONObject();
-        json.put("id", ID_SIGN);
-        json.put("command", "sign");
-        json.put("secret", secret);
-        
         JSONObject tx = new JSONObject();
         tx.put("TransactionType", "Payment");
         tx.put("Account", address);
         tx.put("Amount", Integer.parseInt(toValue.getText().toString())*1000000);
         tx.put("Destination", toAddress.getText().toString());
         
+        JSONObject json = new JSONObject();
+        json.put("id", ID_SIGN);
+        json.put("command", "sign");
+        json.put("secret", secret);
         json.put("tx_json", tx);
         
         resources.client.sendMessage(json);
-                
     }
     
+    /** Takes the final step in actually sending the money.
+     */ 
     public static void submitTransaction(String tx_blob) throws JSONException {
+
         JSONObject json = new JSONObject();
         json.put("id", ID_SUBMIT);
         json.put("command", "submit");
         json.put("tx_blob", tx_blob);
+        
         resources.client.sendMessage(json);
+    }
+
+    /** Supposed to display a message saying transaction is succesful.
+     *
+     * Note: Not in use due to thread issues.
+     */
+    public static void setSuccessStatus(String amount) {
+        transactionStatus.setText("Successfully sent " + amount + "drops.");    
     }
 
     /** For demoing.

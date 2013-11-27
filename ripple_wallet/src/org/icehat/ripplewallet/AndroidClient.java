@@ -87,26 +87,33 @@ public class AndroidClient extends Client {
         handler.post(runnable);
     }
     
-    public void handleMessage(final JSONObject msg) throws JSONException{
-    	String status = "";
-    	status = msg.get("status").toString();
-    	if (status.equals("success")) {
-    		if (msg.getJSONObject("result").has("account_data")) {
-    			account_data = msg.toString();
+    public void handleMessage(final JSONObject message) throws JSONException{
+    	
+    	String status = message.get("status").toString();
+    	
+        if (status.equals("success")) {
+    		if (message.getJSONObject("result").has("account_data")) {
+    			account_data = message.toString();
     		}
-    		else if (msg.getJSONObject("result").has("lines")) {
-    			account_lines = msg.toString();
+    		else if (message.getJSONObject("result").has("lines")) {
+    			account_lines = message.toString();
     		}
-            if(msg.get("id").equals(300)) {
+            if (message.get("id").equals(300)) {
+                
                 // Send money response
-                String tx_blob = msg.getJSONObject("result").getString("tx_blob");
-                Log.d(TAG, "TX_BLOB: "+tx_blob);
+                String tx_blob = message.getJSONObject("result").getString("tx_blob");
+                Log.d(TAG, "TX_BLOB: " + tx_blob);
                 Send.submitTransaction(tx_blob);   
+            }
+            else if (message.get("id").equals(301)) {
+                //Does not work at the moment cause it's not on the UI thread.
+                //Send.setSuccessStatus(message.getJSONObject("result").getString("tx_json"));
+                String amount = message.getJSONObject("result").getJSONObject("tx_json").getString("Amount");
+                Log.d(TAG, "Successfully sent " + amount + " drops.");
             }
     	}
     	else {
-    		error = msg.get("error").toString();
-    		Log.d(TAG, error);
+    		Log.d(TAG, message.get("error").toString());
     	}
     }
 }

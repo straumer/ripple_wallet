@@ -32,9 +32,7 @@ public class Session extends Activity {
     protected static String address;
     protected static String secret;
     protected static String TAG;
-    protected static Account account;
-    protected static TransactionManager transactionManager;
-    static DecimalFormat df = new DecimalFormat("#.##");
+    protected static DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,8 +79,6 @@ public class Session extends Activity {
             blob = new JSONObject(getIntent().getStringExtra("blob")); 
             address = blob.getString("account_id");
             secret = blob.getString("master_seed");
-            account = resources.client.accountFromSeed(secret);
-            transactionManager = account.transactionManager();
             Log.d(TAG, "Now logged in. Blob stored.");
         }
         catch (JSONException e) {
