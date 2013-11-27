@@ -99,7 +99,7 @@ public class AndroidClient extends Client {
     		}
             if(msg.get("id").equals(300)) {
                 // Send money response
-                String tx_blob = msg.getJSONObject("result");
+                String tx_blob = msg.getJSONObject("result").toString();
                 Log.d(TAG, "TX_BLOB: "+tx_blob );
                 JSONObject tx_blog_json = new JSONObject(tx_blob);
                 Send.submitTransaction(tx_blob);   

@@ -31,7 +31,7 @@ public class Session extends Activity {
     protected static SharedResources resources;
     protected static String address;
     protected static String secret;
-    protected static  String TAG;
+    protected static String TAG;
     protected static Account account;
     protected static TransactionManager transactionManager;
     static DecimalFormat df = new DecimalFormat("#.##");
