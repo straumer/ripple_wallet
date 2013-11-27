@@ -71,7 +71,7 @@ public class Send extends Session
         JSONObject tx = new JSONObject();
         tx.put("TransactionType", "Payment");
         tx.put("Account", address);
-        tx.put("Amount", toValue.getText().toString());
+        tx.put("Amount", Integer.parseInt(toValue.getText().toString())*1000000);
         tx.put("Destination", toAddress.getText().toString());
         
         json.put("tx_json", tx);
@@ -92,6 +92,6 @@ public class Send extends Session
      */
     public void insertDemo(View v) {
         toAddress.setText("ramdQDAaNjZM8ZvpTTZpccK4CVh9N81mgF");
-        toValue.setText("0.0001");
+        toValue.setText("1");
     }
 }
